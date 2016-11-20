@@ -94,10 +94,9 @@ public class Server {
 
         try {
             ServerSocket serverSocket = new ServerSocket(portNumber);
-            //int counter = 0;
             while (true) {
                 clientSocket = serverSocket.accept();
-                if (clientsList.size() < maxNrOfClients && !clientsList.containsKey(clientSocket.getInetAddress())) { // TODO: 18/11/16 build 2 server jars - LAN and WAN
+                if (clientsList.size() < maxNrOfClients) { //&& !clientsList.contains(clientSocket.getInetAddress())) {
                     clientsConnection = new ClientsConnection(clientSocket, this);
                     clientsList.put(clientsConnection, clientSocket.getInetAddress());
                     System.out.println(clientSocket + " connected!\nTotal: " + clientsList.size());
@@ -157,18 +156,11 @@ public class Server {
      */
     public synchronized void broadcast(String message) {
 
-        for (ClientsConnection client : clientsList.values()) {
+        for (ClientsConnection client : clientsList.keySet()) {
             client.sendMessage("\n" + message);
         }
     }
 
-    public synchronized void sendPrivateMessage(String message, String PlayerName) { // ?????
-
-        for (ClientsConnection client : clientsList.values()) {
-            if (clientsList.values().equals(PlayerName))
-                client.sendMessage("\n" + message);
-        }
-    }
 /*
     public void stopConnection(String playerName) {
     /**
@@ -206,7 +198,7 @@ public class Server {
 
     public void actualizeScores(String playerName, int points) {
 
-        for (ClientsConnection client : clientsList.values()) {
+        for (ClientsConnection client : clientsList.keySet()) {
             if (client.getName().equals(playerName)) {
                 client.setScore(points);
                 return;
@@ -217,7 +209,7 @@ public class Server {
     public void printScoreboard() {
 
         String scoreBoard = "";
-        for (ClientsConnection client : clientsList.values()) {
+        for (ClientsConnection client : clientsList.keySet()) {
             scoreBoard += client.getName() + " | Score: " + client.getScore() + "\t";
         }
         broadcast(scoreBoard);
