@@ -34,7 +34,6 @@ public class Game {
 */
         aux++;
         if (server.getNrOfMissingPlayers() <= 0 && aux >= FinalVars.MAX_NR_PLAYERS) {
-            System.out.println("Question Answered" + questionAnswered);
             server.broadcast("\n" + (char) 27 + "[30;42;1mStart the game" + (char) 27 + "[0m");
             server.broadcast(printQuestion());
         }
@@ -124,7 +123,7 @@ public class Game {
      */
     private String questionBuilder() {
 
-        return String.format("%s \n%-30s %s \n%-30s %s",
+        return String.format("%s \n%-30s %s \n%-35s %s",
                 (char) 27 + "[37;40;1m" + question[0] + (char) 27 + "[0m",
                 (char) 27 + "[31;1m" + QuestionBuildType.FIRSTANSWER.getText() + (char) 27 + "[0m" + question[1],
                 (char) 27 + "[31;1m" + QuestionBuildType.SECONDANSWER.getText() + (char) 27 + "[0m" + question[2],

@@ -91,4 +91,8 @@ class ClientsConnection implements Runnable {
         return score;
     }
 
+    public void endGame() {
+
+        Thread.currentThread().interrupt();
+    }
 }

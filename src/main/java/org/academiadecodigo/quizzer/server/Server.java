@@ -158,6 +158,8 @@ public class Server {
 
         for (ClientsConnection client : clientsList.keySet()) {
             client.sendMessage("\n" + message);
+            client.endGame();
+            new Server(portNumber,maxNrOfClients);
         }
     }
 
